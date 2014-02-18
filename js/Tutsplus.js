@@ -12,12 +12,18 @@ Tutsplus.createXHR=function(url,options){
 
     xhr.onreadystatechange=function(){
       if((xhr.readyState==4)&&(xhr.status==200 || xhr.status==304)){
+        var contentType=xhr.getResponseHeader('Content-Type');
         if(options.complete){
+          if(contentType=="application/json"){
           options.complete.call(xhr,JSON.parse(xhr.responseText));
+          }else if(contentType=="text/xml"||contentType=="application/xml"){
+            options.complete.call(xhr,xhr.responseXML);
+          }else{
+            options.complete.call(xhr,xhr.responseText);
+          }
         }
       }
     };
-
 
     xhr.open(options.method,url,true);
     return xhr;
