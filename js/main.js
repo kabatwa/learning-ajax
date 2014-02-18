@@ -6,14 +6,16 @@
     xhr.onreadystatechange=function(){
         if((xhr.readyState==4)&&(xhr.status==200 || xhr.status==304)){
           var body=document.getElementsByTagName("body")[0];
-          var p=document.createElement("p");
-          var pText=document.createTextNode(xhr.responseText);
-          p.appendChild(pText);
-          body.appendChild(p);
+          var div=document.createElement("div");
+          body.appendChild(div);
+          var divv=document.getElementsByTagName("div")[0];
+          divv.innerHTML=xhr.responseText;
+
+          body.removeChild(link);
         }
     };
 
-    xhr.open("GET","files/ajax.txt",true);
+    xhr.open("GET","files/ajax.html",true);
     xhr.send(null);
 
     return false;
